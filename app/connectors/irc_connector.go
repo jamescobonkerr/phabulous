@@ -61,7 +61,9 @@ func (c *IRCConnector) Boot() error {
 		func(conn *irc.Conn, line *irc.Line) {
 			c.logger.Infof("Connected to IRC server: %s:%d", hostname, port)
 
-			c.PostOnFeed("Hi! Phabulous v3 reporting for duty!")
+			if c.config.GetBool("server.reportOnStartup") {
+				c.PostOnFeed("Hi! Phabulous v3 reporting for duty!")
+			}
 
 			c.joinConfiguredChannels()
 
